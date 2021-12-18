@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +21,8 @@ public class Settings {
     public int CHANCE;
     public boolean INSTANT_GROW;
 
-    public List<String> WORLD_BLACKLIST = new ArrayList<>();
-    public final List<Material> GROW_WHITELIST = new ArrayList<>();
+    public List<String> WORLD_BLACKLIST;
+    public List<Material> GROW_WHITELIST;
 
     public boolean GROWING_PARTICLE_ENABLED;
     public Particle GROWING_PARTICLE;
@@ -67,7 +68,9 @@ public class Settings {
         CHANCE = config.getInt("chance");
         INSTANT_GROW = config.getBoolean("instant_grow");
 
+        WORLD_BLACKLIST = new ArrayList<>();
         WORLD_BLACKLIST = config.getStringList("world_blacklist");
+        GROW_WHITELIST = new ArrayList<>();
         for (String material : config.getStringList("grow_whitelist")) {
             GROW_WHITELIST.add(Material.valueOf(material.toUpperCase()));
         }
