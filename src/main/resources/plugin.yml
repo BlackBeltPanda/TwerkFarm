@@ -4,7 +4,7 @@ main: com.blackbeltpanda.twerkfarm.TwerkFarm
 api-version: 1.17
 authors: [ BlackBeltPanda ]
 description: Twerk to farm!
-website: https://github.com/BlackBeltPanda
+website: https://github.com/BlackBeltPanda/TwerkFarm
 commands:
   twerkfarm:
     description: TwerkFarm command
