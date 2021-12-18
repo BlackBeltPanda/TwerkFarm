@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -26,7 +27,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     private void onPlayerSneak(final PlayerToggleSneakEvent event) {
-        if (settings.SNEAK_ENABLED && event.getPlayer().hasPermission("twerkfortrees.twerk")) {
+        if (settings.SNEAK_ENABLED && event.getPlayer().hasPermission("twerkfarm.twerk")) {
             twerk(event.getPlayer());
         }
     }
@@ -59,11 +60,11 @@ public class PlayerEvents implements Listener {
         List<Block> found = new ArrayList<>();
         Location sourceLocation = player.getLocation();
         int radius = settings.RANGE/2;
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
+        for (int x = -radius; x < radius; x++) {
+            for (int y = -radius; y < radius; y++) {
+                for (int z = -radius; z < radius; z++) {
                     Block check = player.getWorld().getBlockAt(sourceLocation.getBlockX() + x, sourceLocation.getBlockY() + y, sourceLocation.getBlockZ() + z);
-                    if (settings.GROW_WHITELIST.contains(check.getType()) && player.hasPermission("twerkfortrees.twerk." + check.getType())) {
+                    if (settings.GROW_WHITELIST.contains(check.getType()) && player.hasPermission("twerkfarm.twerk." + check.getType().toString().toLowerCase())) {
                         found.add(check);
                     }
                 }

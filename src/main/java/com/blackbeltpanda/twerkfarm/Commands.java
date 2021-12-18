@@ -13,7 +13,7 @@ public class Commands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("reload")) {
                 plugin.reloadConfig();
