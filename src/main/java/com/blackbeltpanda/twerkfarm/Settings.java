@@ -6,7 +6,6 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
