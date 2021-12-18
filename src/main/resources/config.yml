@@ -1,0 +1,92 @@
+# If sneaking (twerking) should grow whitelisted blocks
+sneak_enabled: true
+
+# If sprinting should grow whitelisted blocks
+# NOTE: The client doesn't always send sprint packets properly so the sprint check may not be accurate
+sprint_enabled: true
+
+# How long to wait, in ticks, between checking a player's sprint status. 20 ticks = 1 second
+sprint_delay: 20
+
+# How large of an area to check around the player for whitelisted blocks. A range of 6 means it will check 3 blocks in every direction
+range: 6
+
+# The chance, from 1 to 100, that sneaking or sprinting will bonemeal a whitelisted block. 100 will guarantee the block gets bonemealed each time
+chance: 10
+
+# If set to true, twerking will instantly grow whitelisted blocks to their maximum growth stage instead of simulating bonemeal
+instant_grow: false
+
+# Worlds that TwerkFarm should NOT work in
+world_blacklist:
+  - "Mining"
+  - "parkour"
+
+# Blocks that TwerkFarm should work on. Only works on blocks that can be bonemealed
+# NOTE: You can find a list of material names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+grow_whitelist:
+  - "oak_sapling"
+  - "spruce_sapling"
+  - "birch_sapling"
+  - "acacia_sapling"
+  - "jungle_sapling"
+  - "dark_oak_sapling"
+  - "wheat"
+  - "carrots"
+  - "potatoes"
+  - "beetroot"
+  - "bamboo"
+
+# Effects to be applied to a block that is being bonemealed
+growing_effects:
+  particle:
+    # If particles should be shown
+    enabled: true
+    # The particle to display
+    # NOTE: You can find a list of particle names here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+    type: "villager_happy"
+    # How many particles to display
+    amount: 5
+    # Offset will move the particle in the x, y, or z axis by the number of blocks you specify
+    offset_x: 0.0
+    offset_y: 0.0
+    offset_z: 0.0
+    # Some particles can use extra data which you can set here. This usually controls the particle speed
+    extra: 0.0
+  sound:
+    # If sound should be played
+    enabled: true
+    # The sound to play
+    # NOTE: You can find a list of sound names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+    type: "block_sand_place"
+    # The volume from 1 to 100. Anything higher than 100 (max volume) simply increases the distance the sound can be heard from, rather than the volume
+    volume: 100
+    # The pitch from 50 to 200. A pitch of 100 is the "normal" pitch
+    pitch: 150
+
+# Effects to be applied to a block that has just fully grown after being bonemealed via TwerkFarm
+grown_effects:
+  particle:
+    # If particles should be shown
+    enabled: true
+    # The particle to display
+    # NOTE: You can find a list of particle names here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+    type: "explosion_large"
+    # How many particles to display
+    amount: 3
+    # Offset will move the particle in the x, y, or z axis by the number of blocks you specify
+    offset_x: 0.0
+    offset_y: 2.0
+    offset_z: 0.0
+    # Some particles can use extra data which you can set here. This usually controls the particle speed
+    extra: 0.0
+  sound:
+    # If sound should be played
+    enabled: true
+    # The sound to play
+    # NOTE: You can find a list of sound names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+    type: "block_amethyst_block_chime"
+    # The volume from 1 to 100. Anything higher than 100 (max volume) simply increases the distance the sound can be heard from, rather than the volume
+    volume: 100
+    # The pitch from 50 to 200. A pitch of 100 is the "normal" pitch
+    pitch: 100

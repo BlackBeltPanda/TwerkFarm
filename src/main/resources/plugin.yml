@@ -1,0 +1,38 @@
+name: TwerkFarm
+version: ${project.version}
+main: com.blackbeltpanda.twerkfarm.TwerkFarm
+api-version: 1.17
+authors: [ BlackBeltPanda ]
+description: Twerk to farm!
+website: https://github.com/BlackBeltPanda
+Commands:
+  twerkarm:
+    description: TwerkFarm command
+    aliases:
+      - twerk
+      - tw
+      - tf
+    permission: twerkfarm.command
+    usage: /<command> [reload|version]
+permissions:
+  twerkfarm.twerk:
+    description: Allows a player to twerk to grow nearby crops or saplings
+    default: true
+  twerkfarm.command:
+    description: Allows access to the /twerkfarm command
+    default: op
+  twerkfarm.command.reload:
+    description: Allows access to the /twerkfarm reload command
+    default: op
+  twerkfarm.command.*:
+    description: Allows access to all /twerkfarm commands
+    default: op
+    children:
+      twerkfarm.command: true
+      twerkfarm.command.reload: true
+  twerkfarm.*:
+    description: Allows access to all TwerkFarm permissions
+    default: op
+    children:
+      twerkfarm.command.*: true
+      twerkfarm.twerk: true
