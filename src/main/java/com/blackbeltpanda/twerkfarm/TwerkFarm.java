@@ -42,7 +42,7 @@ public final class TwerkFarm extends JavaPlugin {
         for (Material material : settings.GROW_WHITELIST) {
             Permission permission = new Permission(material.toString().toLowerCase(),
                     "Allows player to twerk to grow " + material, PermissionDefault.FALSE);
-            permission.addParent("twerkfarm.twerk", false);
+            permission.addParent("twerkfarm.twerk.*", true);
             if (pluginManager.getPermission(permission.getName()) == null) {
                 pluginManager.addPermission(permission);
             }

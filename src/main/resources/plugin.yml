@@ -16,23 +16,19 @@ commands:
     usage: /<command> [reload|version]
 permissions:
   twerkfarm.twerk:
-    description: Allows a player to twerk to grow nearby crops or saplings
+    description: Allows a player to use the twerk feature
     default: true
+  twerkfarm.twerk.*:
+    description: Allows a player to twerk to grow all nearby whitelisted blocks
+    default: false
+    children:
+      twerkfarm.twerk: true
   twerkfarm.command:
     description: Allows access to the /twerkfarm command
     default: op
-  twerkfarm.command.reload:
-    description: Allows access to the /twerkfarm reload command
-    default: op
-  twerkfarm.command.*:
-    description: Allows access to all /twerkfarm commands
-    default: op
-    children:
-      twerkfarm.command: true
-      twerkfarm.command.reload: true
   twerkfarm.*:
     description: Allows access to all TwerkFarm permissions
     default: op
     children:
-      twerkfarm.command.*: true
-      twerkfarm.twerk: true
+      twerkfarm.command: true
+      twerkfarm.twerk.*: true
