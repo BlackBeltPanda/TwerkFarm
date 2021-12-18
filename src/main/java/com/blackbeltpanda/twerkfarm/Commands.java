@@ -4,13 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class Commands implements CommandExecutor {
-
-    TwerkFarm plugin;
-
-    public Commands(TwerkFarm plugin) {
-        this.plugin = plugin;
-    }
+public record Commands(TwerkFarm plugin) implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

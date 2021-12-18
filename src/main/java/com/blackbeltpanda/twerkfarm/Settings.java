@@ -6,7 +6,9 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Settings {
 
@@ -18,8 +20,8 @@ public class Settings {
     public int CHANCE;
     public boolean INSTANT_GROW;
 
-    public List<String> WORLD_BLACKLIST;
-    public List<Material> GROW_WHITELIST;
+    public List<String> WORLD_BLACKLIST = new ArrayList<>();
+    public final List<Material> GROW_WHITELIST = new ArrayList<>();
 
     public boolean GROWING_PARTICLE_ENABLED;
     public Particle GROWING_PARTICLE;
@@ -47,7 +49,7 @@ public class Settings {
     public int GROWN_SOUND_VOLUME;
     public int GROWN_SOUND_PITCH;
 
-    Plugin plugin;
+    final Plugin plugin;
 
     public Settings(Plugin plugin) {
         this.plugin = plugin;
@@ -71,7 +73,7 @@ public class Settings {
         }
 
         GROWING_PARTICLE_ENABLED = config.getBoolean("growing_effects.particle.enabled");
-        GROWING_PARTICLE = Particle.valueOf(config.getString("growing_effects.particle.type"));
+        GROWING_PARTICLE = Particle.valueOf(Objects.requireNonNull(config.getString("growing_effects.particle.type")).toUpperCase());
         GROWING_PARTICLE_COUNT = config.getInt("growing_effects.particle.amount");
         GROWING_PARTICLE_OFFSET_X = config.getDouble("growing_effects.particle.offset_x");
         GROWING_PARTICLE_OFFSET_Y = config.getDouble("growing_effects.particle.offset_y");
@@ -79,12 +81,12 @@ public class Settings {
         GROWING_PARTICLE_EXTRA = config.getDouble("growing_effects.particle.extra");
 
         GROWING_SOUND_ENABLED = config.getBoolean("growing_effects.sound.enabled");
-        GROWING_SOUND = Sound.valueOf(config.getString("growing_effects.sound.type"));
+        GROWING_SOUND = Sound.valueOf(Objects.requireNonNull(config.getString("growing_effects.sound.type")).toUpperCase());
         GROWING_SOUND_VOLUME = config.getInt("growing_effects.sound.volume");
         GROWING_SOUND_PITCH = config.getInt("growing_effects.sound.pitch");
 
         GROWN_PARTICLE_ENABLED = config.getBoolean("grown_effects.particle.enabled");
-        GROWN_PARTICLE = Particle.valueOf(config.getString("grown_effects.particle.type"));
+        GROWN_PARTICLE = Particle.valueOf(Objects.requireNonNull(config.getString("grown_effects.particle.type")).toUpperCase());
         GROWN_PARTICLE_COUNT = config.getInt("grown_effects.particle.amount");
         GROWN_PARTICLE_OFFSET_X = config.getDouble("grown_effects.particle.offset_x");
         GROWN_PARTICLE_OFFSET_Y = config.getDouble("grown_effects.particle.offset_y");
@@ -92,7 +94,7 @@ public class Settings {
         GROWN_PARTICLE_EXTRA = config.getDouble("grown_effects.particle.extra");
 
         GROWN_SOUND_ENABLED = config.getBoolean("grown_effects.sound.enabled");
-        GROWN_SOUND = Sound.valueOf(config.getString("grown_effects.sound.type"));
+        GROWN_SOUND = Sound.valueOf(Objects.requireNonNull(config.getString("grown_effects.sound.type")).toUpperCase());
         GROWN_SOUND_VOLUME = config.getInt("grown_effects.sound.volume");
         GROWN_SOUND_PITCH = config.getInt("grown_effects.sound.pitch");
     }

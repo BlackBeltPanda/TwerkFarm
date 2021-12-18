@@ -9,7 +9,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
-import java.util.Set;
 
 public final class TwerkFarm extends JavaPlugin {
 
@@ -40,12 +39,11 @@ public final class TwerkFarm extends JavaPlugin {
 
     private void registerPermissions() {
         PluginManager pluginManager = getServer().getPluginManager();
-        Set<Permission> permissions = pluginManager.getPermissions();
         for (Material material : settings.GROW_WHITELIST) {
             Permission permission = new Permission(material.toString().toLowerCase(),
                     "Allows player to twerk to grow " + material, PermissionDefault.FALSE);
             permission.addParent("twerkfarm.twerk", false);
-            if (!permissions.contains(permission)) {
+            if (pluginManager.getPermission(permission.getName()) == null) {
                 pluginManager.addPermission(permission);
             }
         }

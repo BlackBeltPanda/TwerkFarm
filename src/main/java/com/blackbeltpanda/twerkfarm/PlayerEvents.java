@@ -1,6 +1,5 @@
 package com.blackbeltpanda.twerkfarm;
 
-import com.blackbeltpanda.twerkfarm.Settings;
 import org.bukkit.Location;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
@@ -14,16 +13,10 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
-public class PlayerEvents implements Listener {
-
-    Settings settings;
-    public PlayerEvents(Settings settings) {
-        this.settings = settings;
-    }
+public record PlayerEvents(Settings settings) implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     private void onPlayerSneak(final PlayerToggleSneakEvent event) {
@@ -44,8 +37,7 @@ public class PlayerEvents implements Listener {
                     if (!settings.INSTANT_GROW) {
                         if (block.getState().getBlockData() instanceof Sapling sapling) {
                             grown = sapling.getStage() >= sapling.getMaximumStage();
-                        }
-                        else if (block.getState().getBlockData() instanceof Ageable ageable) {
+                        } else if (block.getState().getBlockData() instanceof Ageable ageable) {
                             grown = ageable.getAge() >= ageable.getMaximumAge();
                         }
                     }
@@ -59,7 +51,7 @@ public class PlayerEvents implements Listener {
     private List<Block> scanForBlocks(Player player) {
         List<Block> found = new ArrayList<>();
         Location sourceLocation = player.getLocation();
-        int radius = settings.RANGE/2;
+        int radius = settings.RANGE / 2;
         for (int x = -radius; x < radius; x++) {
             for (int y = -radius; y < radius; y++) {
                 for (int z = -radius; z < radius; z++) {

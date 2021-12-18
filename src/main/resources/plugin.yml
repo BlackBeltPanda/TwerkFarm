@@ -5,8 +5,8 @@ api-version: 1.17
 authors: [ BlackBeltPanda ]
 description: Twerk to farm!
 website: https://github.com/BlackBeltPanda
-Commands:
-  twerkarm:
+commands:
+  twerkfarm:
     description: TwerkFarm command
     aliases:
       - twerk
