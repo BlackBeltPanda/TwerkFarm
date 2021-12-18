@@ -7,7 +7,7 @@ sneak_enabled: true
 sprint_enabled: true
 
 # How long to wait, in ticks, between checking a player's sprint status. 20 ticks = 1 second
-sprint_delay: 20
+sprint_delay: 5
 
 # How large of an area to check around the player for whitelisted blocks. A range of 6 means it will check 3 blocks in every direction
 range: 6
@@ -37,6 +37,10 @@ grow_whitelist:
   - "potatoes"
   - "beetroot"
   - "bamboo"
+  - "melon_stem"
+  - "pumpkin_stem"
+  - "cocoa"
+  - "sweet_berry_bush"
 
 # Effects to be applied to a block that is being bonemealed
 growing_effects:
@@ -77,7 +81,7 @@ grown_effects:
     amount: 3
     # Offset will move the particle in the x, y, or z axis by the number of blocks you specify
     offset_x: 0.0
-    offset_y: 2.0
+    offset_y: 1.0
     offset_z: 0.0
     # Some particles can use extra data which you can set here. This usually controls the particle speed
     extra: 0.0

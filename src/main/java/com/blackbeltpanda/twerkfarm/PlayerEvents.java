@@ -33,15 +33,7 @@ public record PlayerEvents(Settings settings) implements Listener {
         if (!found.isEmpty()) {
             for (Block block : found) {
                 if (ThreadLocalRandom.current().nextFloat() < settings.CHANCE / 100f) {
-                    boolean grown = settings.INSTANT_GROW;
-                    if (!settings.INSTANT_GROW) {
-                        if (block.getState().getBlockData() instanceof Sapling sapling) {
-                            grown = sapling.getStage() >= sapling.getMaximumStage();
-                        } else if (block.getState().getBlockData() instanceof Ageable ageable) {
-                            grown = ageable.getAge() >= ageable.getMaximumAge();
-                        }
-                    }
-                    bonemeal(block, grown);
+                    bonemeal(block);
                 }
             }
         }
@@ -57,6 +49,9 @@ public record PlayerEvents(Settings settings) implements Listener {
                 for (int z = -radius; z < radius; z++) {
                     Block check = player.getWorld().getBlockAt(sourceLocation.getBlockX() + x, sourceLocation.getBlockY() + y, sourceLocation.getBlockZ() + z);
                     if (settings.GROW_WHITELIST.contains(check.getType()) && player.hasPermission("twerkfarm.twerk." + check.getType().toString().toLowerCase())) {
+                        if (check.getState().getBlockData() instanceof Ageable ageable && ageable.getAge() >= ageable.getMaximumAge()) {
+                            continue;
+                        }
                         found.add(check);
                     }
                 }
@@ -66,10 +61,31 @@ public record PlayerEvents(Settings settings) implements Listener {
     }
 
     // Simulate bonemealing the block
-    private void bonemeal(Block block, boolean grown) {
+    private void bonemeal(Block block) {
+        boolean fullyGrown = false;
+        if (settings().INSTANT_GROW) {
+            IntStream.range(0, 100).forEach($ -> block.applyBoneMeal(BlockFace.UP));
+            fullyGrown = true;
+        }
+        else {
+            if (block.getState().getBlockData() instanceof Sapling sapling) {
+                if (sapling.getStage() >= sapling.getMaximumStage()) {
+                    IntStream.range(0, 100).forEach($ -> block.applyBoneMeal(BlockFace.UP));
+                    fullyGrown = true;
+                } else {
+                    block.applyBoneMeal(BlockFace.UP);
+                }
+            } else {
+                block.applyBoneMeal(BlockFace.UP);
+                if (block.getState().getBlockData() instanceof Ageable ageable) {
+                    if (ageable.getAge() >= ageable.getMaximumAge()) {
+                        fullyGrown = true;
+                    }
+                }
+            }
+        }
         // If the block hasn't fully grown, bonemeal it once
-        if (!grown) {
-            block.applyBoneMeal(BlockFace.UP);
+        if (!fullyGrown) {
             if (settings.GROWING_PARTICLE_ENABLED) {
                 block.getWorld().spawnParticle(
                         settings.GROWING_PARTICLE, block.getLocation().add(0.5, 0.5, 0.5), settings.GROWING_PARTICLE_COUNT,
@@ -91,7 +107,6 @@ public record PlayerEvents(Settings settings) implements Listener {
                 block.getWorld().playSound(block.getLocation(), settings.GROWN_SOUND, SoundCategory.BLOCKS,
                         settings.GROWN_SOUND_VOLUME / 100f, settings.GROWN_SOUND_PITCH / 100f);
             }
-            IntStream.range(0, 100).forEach($ -> block.applyBoneMeal(BlockFace.UP));
         }
     }
 
