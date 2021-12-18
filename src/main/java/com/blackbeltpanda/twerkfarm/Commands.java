@@ -15,6 +15,10 @@ public record Commands(TwerkFarm plugin) implements CommandExecutor {
                 sender.sendMessage("TwerkFarm has been reloaded.");
                 return true;
             }
+            else if (args[0].equalsIgnoreCase("version")) {
+                sender.sendMessage("TwerkFarm version: " + plugin.getDescription().getVersion());
+                return true;
+            }
         }
         return false;
     }

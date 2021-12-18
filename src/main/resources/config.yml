@@ -3,6 +3,7 @@ sneak_enabled: true
 
 # If sprinting should grow whitelisted blocks
 # NOTE: The client doesn't always send sprint packets properly so the sprint check may not be accurate
+# Possibly only works with double-tapping the forward key
 sprint_enabled: true
 
 # How long to wait, in ticks, between checking a player's sprint status. 20 ticks = 1 second
