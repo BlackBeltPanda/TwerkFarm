@@ -51,13 +51,9 @@ public final class TwerkFarm extends JavaPlugin {
 
     private void scheduleSprintTask() {
         if (settings.SPRINT_ENABLED) {
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.isSprinting()) {
-                        events.twerk(player);
-                    }
-                }
-            }, settings.SPRINT_DELAY, settings.SPRINT_DELAY);
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () ->
+                    Bukkit.getOnlinePlayers().stream().filter(Player::isSprinting).forEach(player -> events.twerk(player)),
+                    settings.SPRINT_DELAY, settings.SPRINT_DELAY);
         }
     }
 }

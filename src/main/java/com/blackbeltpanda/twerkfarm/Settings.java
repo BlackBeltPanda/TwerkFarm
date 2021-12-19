@@ -67,7 +67,6 @@ public class Settings {
         CHANCE = config.getInt("chance");
         INSTANT_GROW = config.getBoolean("instant_grow");
 
-        WORLD_BLACKLIST = new ArrayList<>();
         WORLD_BLACKLIST = config.getStringList("world_blacklist");
         GROW_WHITELIST = new ArrayList<>();
         for (String material : config.getStringList("grow_whitelist")) {

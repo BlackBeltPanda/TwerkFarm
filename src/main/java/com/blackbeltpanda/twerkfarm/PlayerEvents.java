@@ -26,16 +26,8 @@ public record PlayerEvents(Settings settings) implements Listener {
     }
 
     public void twerk(Player player) {
-        if (settings.WORLD_BLACKLIST.contains(player.getWorld().getName())) {
-            return;
-        }
-        List<Block> found = scanForBlocks(player);
-        if (!found.isEmpty()) {
-            for (Block block : found) {
-                if (ThreadLocalRandom.current().nextFloat() < settings.CHANCE / 100f) {
-                    bonemeal(block);
-                }
-            }
+        if (!settings.WORLD_BLACKLIST.contains(player.getWorld().getName())) {
+            scanForBlocks(player).stream().filter($ -> ThreadLocalRandom.current().nextFloat() < settings.CHANCE / 100f).forEach(this::bonemeal);
         }
     }
 
@@ -43,16 +35,16 @@ public record PlayerEvents(Settings settings) implements Listener {
     private List<Block> scanForBlocks(Player player) {
         List<Block> found = new ArrayList<>();
         Location sourceLocation = player.getLocation();
-        int radius = settings.RANGE / 2;
-        for (int x = -radius; x < radius; x++) {
-            for (int y = -radius; y < radius; y++) {
-                for (int z = -radius; z < radius; z++) {
+        // I wish there was a better way to do this
+        for (int x = -settings.RANGE; x < settings.RANGE; x++) {
+            for (int y = -settings.RANGE; y < settings.RANGE; y++) {
+                for (int z = -settings.RANGE; z < settings.RANGE; z++) {
                     Block check = player.getWorld().getBlockAt(sourceLocation.getBlockX() + x, sourceLocation.getBlockY() + y, sourceLocation.getBlockZ() + z);
                     if (settings.GROW_WHITELIST.contains(check.getType()) && player.hasPermission("twerkfarm.twerk." + check.getType().toString().toLowerCase())) {
-                        if (check.getState().getBlockData() instanceof Ageable ageable && ageable.getAge() >= ageable.getMaximumAge()) {
-                            continue;
+                        // Make sure it isn't already fully grown
+                        if (!(check.getState().getBlockData() instanceof Ageable ageable && ageable.getAge() >= ageable.getMaximumAge())) {
+                            found.add(check);
                         }
-                        found.add(check);
                     }
                 }
             }
@@ -64,27 +56,31 @@ public record PlayerEvents(Settings settings) implements Listener {
     private void bonemeal(Block block) {
         boolean fullyGrown = false;
         if (settings().INSTANT_GROW) {
-            IntStream.range(0, 100).forEach($ -> block.applyBoneMeal(BlockFace.UP));
+            // Lots of bonemeal to make sure it fully grows
+            IntStream.range(0, 10).forEach($ -> block.applyBoneMeal(BlockFace.UP));
             fullyGrown = true;
         }
         else {
+            // Saplings turn into trees after they hit their max age, so we need to check for that
             if (block.getState().getBlockData() instanceof Sapling sapling) {
+                // If it is max age, turn it into a tree
                 if (sapling.getStage() >= sapling.getMaximumStage()) {
-                    IntStream.range(0, 100).forEach($ -> block.applyBoneMeal(BlockFace.UP));
+                    // Lots of bonemeal to make sure it fully grows
+                    IntStream.range(0, 10).forEach($ -> block.applyBoneMeal(BlockFace.UP));
                     fullyGrown = true;
-                } else {
+                }
+                else {
                     block.applyBoneMeal(BlockFace.UP);
                 }
-            } else {
+            }
+            // Everything else should just bonemeal normally
+            else {
                 block.applyBoneMeal(BlockFace.UP);
-                if (block.getState().getBlockData() instanceof Ageable ageable) {
-                    if (ageable.getAge() >= ageable.getMaximumAge()) {
-                        fullyGrown = true;
-                    }
-                }
+                // After bonemealing it, gotta check if it hit its max age as a result
+                fullyGrown = block.getState().getBlockData() instanceof Ageable ageable && ageable.getAge() >= ageable.getMaximumAge();
             }
         }
-        // If the block hasn't fully grown, bonemeal it once
+        // Effects if the block hasn't fully grown
         if (!fullyGrown) {
             if (settings.GROWING_PARTICLE_ENABLED) {
                 block.getWorld().spawnParticle(
@@ -96,7 +92,7 @@ public record PlayerEvents(Settings settings) implements Listener {
                         settings.GROWING_SOUND_VOLUME / 100f, settings.GROWING_SOUND_PITCH / 100f);
             }
         }
-        // If it is fully grown, or instantGrow is true, bonemeal the heck out of it to fully grow it
+        // Effects if it has fully grown
         else {
             if (settings.GROWN_PARTICLE_ENABLED) {
                 block.getWorld().spawnParticle(
@@ -109,5 +105,4 @@ public record PlayerEvents(Settings settings) implements Listener {
             }
         }
     }
-
 }

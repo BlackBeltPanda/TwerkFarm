@@ -5,11 +5,11 @@ sneak_enabled: true
 # NOTE: The client doesn't always send sprint packets properly so the sprint check may not be accurate
 sprint_enabled: true
 
-# How long to wait, in ticks, between checking a player's sprint status. 20 ticks = 1 second
+# How long to wait, in ticks, between checking a player's sprint status. 20 ticks = 1 second, 5 ticks = 0.25 seconds
 sprint_delay: 5
 
-# How large of an area to check around the player for whitelisted blocks. A range of 6 means it will check 3 blocks in every direction
-range: 10
+# How large of an area to check around the player for whitelisted blocks. A range of 5 means it will check 5 blocks in every direction
+range: 5
 
 # The chance, from 1 to 100, that sneaking or sprinting will bonemeal a whitelisted block. 100 will guarantee the block gets bonemealed each time
 chance: 5
